@@ -1,0 +1,17 @@
+[core]
+        editor = nano
+[alias]
+        last = log -1 HEAD
+        sign = commit --gpg-sign --signoff
+        quicklog = log -10 --pretty=format:\"%h%x09%an%x09%ad%x09%s\"
+        develop = !git fetch -p && git checkout develop && git pull
+        br = branch
+        ci = commit
+        co = checkout
+        ql = log -10 --pretty=format:\"%h%x09%an%x09%ad%x09%s\"
+        rb = !git rebase -i HEAD~$1 && :
+        st = status
+[pull]
+        rebase = true
+[init]
+        templatedir = ~/.git-templates
