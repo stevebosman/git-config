@@ -1,4 +1,4 @@
- [core]
+[core]
         editor = nano
 [alias]
         current=rev-parse --abbrev-ref HEAD
