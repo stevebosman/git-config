@@ -1,21 +1,23 @@
 [core]
         editor = nano
 [alias]
-        current=rev-parse --abbrev-ref HEAD
-        develop=!git fetch -p && git checkout develop && git pull && git status
-        main=!git fetch -p && git checkout main && git pull && git status
-        subdev=!find . -type d -name .git -execdir sh -c "pwd && git clean -f && git develop" \;
-        cleanbranches=!git develop && git branch | grep -v develop | xargs git branch -D
-        last=log -1 HEAD
-        quicklog=log -10 --pretty=format:"%h%x09%an%x09%ad%x09%s"
-        sign=commit --gpg-sign --signoff
-        br=branch
-        ci=commit
-        co=checkout
-        po=!git push --set-upstream origin "$(git current)"
-        ql=log -10 --pretty=format:"%h%x09%an%x09%ad%x09%s"
-        rb=!git rebase -i HEAD~$1 && :
-        st=status
+        current = rev-parse --abbrev-ref HEAD
+        develop = !git fetch -p && git checkout develop && git pull && git status
+        main = !git fetch -p && git checkout main && git pull && git status
+        subdev = "!find . -type d -name .git -execdir sh -c \"pwd && git clean -f && git develop\" \\;"
+        cleanbranches = !git develop && git branch | grep -v develop | xargs git branch -D
+        deepclean = "!find . -type d -name .git -execdir sh -c \"pwd && git clean -f && git cleanbranches\" \\;"
+        last = log -1 HEAD
+        quicklog = log -10 --pretty=format:"%h%x09%an%x09%ad%x09%s"
+        sign = commit --gpg-sign --signoff
+        br = branch
+        ci = commit
+        co = checkout
+        po = !git push --set-upstream origin "$(git current)"
+        ql = log -10 --pretty=format:"%h%x09%an%x09%ad%x09%s"
+        rb = !git rebase -i HEAD~$1 && :
+        st = status
+        graph=log --oneline --graph --decorate --all
 [pull]
         rebase = true
 [init]
