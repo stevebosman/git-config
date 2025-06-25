@@ -1,23 +1,32 @@
 [core]
         editor = nano
 [alias]
-        current = rev-parse --abbrev-ref HEAD
-        develop = !git fetch -p && git checkout develop && git pull && git status
-        main = !git fetch -p && git checkout main && git pull && git status
-        subdev = "!find . -type d -name .git -execdir sh -c \"pwd && git clean -f && git develop\" \\;"
-        cleanbranches = !git develop && git branch | grep -v develop | xargs git branch -D
-        deepclean = "!find . -type d -name .git -execdir sh -c \"pwd && git clean -f && git cleanbranches\" \\;"
+        name-current = rev-parse --abbrev-ref HEAD
+        name-default = symbolic-ref --short refs/remotes/origin/HEAD
+
+        clean-branches = !git clean-default && git branch | grep -v "$(basename $(git name-default))" | xargs git branch -D
+        clean-default = !git sw $(basename $(git name-default)) --discard-changes && git reset --hard $(git name-default) && git pull -f
+        deepclean = "!find . -type d -name .git -execdir sh -c \"pwd; mvn clean -q && true; git clean -fdx --exclude=*.iml; git clean-branches\" \\;"
+
+        switch-main = !git fetch -p && git checkout main && git pull && git status
+        switch-default = !git sw $(basename $(git name-default))
+
+        graph = log --oneline --graph --decorate --all
+        last = log -1 HEAD
+        quicklog = log -10 --pretty=format:"%h%x09%an%x09%ad%x09%s"
+
+        home = "!cd $(git root) && pwd"
         sign = commit --gpg-sign --signoff
+        rebase-default = pull origin "$(basename $(git name-default))" --rebase
+
         br = branch
+        sw = switch
         ci = commit
         co = checkout
         po = !git push --set-upstream origin "$(git current)"
         rb = !git rebase -i HEAD~$1 && :
         st = status
-        last = log -1 HEAD
-        quicklog = log -10 --pretty=format:"%h%x09%an%x09%ad%x09%s"
-        ql = log -10 --pretty=format:"%h%x09%an%x09%ad%x09%s"
-        graph=log --oneline --graph --decorate --all
+        ql = quicklog
 [pull]
         rebase = true
 [init]
