@@ -17,7 +17,7 @@
 
         home = "!cd $(git root) && pwd"
         sign = commit --gpg-sign --signoff
-        rebase-default = pull origin "$(basename $(git name-default))" --rebase
+        rebase-default = !git pull origin "$(basename $(git name-default))" --rebase
 
         br = branch
         sw = switch
