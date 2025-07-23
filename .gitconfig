@@ -18,13 +18,16 @@
         home = "!cd $(git root) && pwd"
         sign = commit --gpg-sign --signoff
         rebase-default = !git pull origin "$(basename $(git name-default))" --rebase
+        push-set-upstream = !git push --set-upstream origin "$(git name-current)"
+        interactive-rebase = !git rebase -i HEAD~$1 && :
 
         br = branch
         sw = switch
         ci = commit
         co = checkout
-        po = !git push --set-upstream origin "$(git name-current)"
-        rb = !git rebase -i HEAD~$1 && :
+
+        po = push-set-upstream
+        rb = interactive-rebase
         st = status
         gr = graph
         ql = quicklog
