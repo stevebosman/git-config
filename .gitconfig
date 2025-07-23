@@ -26,6 +26,7 @@
         po = !git push --set-upstream origin "$(git name-current)"
         rb = !git rebase -i HEAD~$1 && :
         st = status
+        gr = graph
         ql = quicklog
 [pull]
         rebase = true
